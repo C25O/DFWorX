@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  web:
+    environment:
+      - NODE_ENV=production
+    command: node server.js
+    restart: always
+
+  api:
+    environment:
+      - DEBUG=false
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --workers 4
+    restart: always
+
+  postgres:
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+
+volumes:
+  postgres_data_prod:
+    driver: local

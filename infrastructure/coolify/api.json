@@ -1,0 +1,48 @@
+{
+  "name": "dfworx-api",
+  "type": "application",
+  "build_pack": "dockerfile",
+  "source": {
+    "type": "github",
+    "repository": "your-org/dfworx",
+    "branch": "main",
+    "project_directory": "services/auth-service",
+    "dockerfile": "Dockerfile"
+  },
+  "environment": [
+    {
+      "key": "ENVIRONMENT",
+      "value": "production"
+    },
+    {
+      "key": "DATABASE_URL",
+      "is_secret": true
+    },
+    {
+      "key": "SUPABASE_URL",
+      "is_secret": false
+    },
+    {
+      "key": "SUPABASE_KEY",
+      "is_secret": true
+    },
+    {
+      "key": "JWT_SECRET_KEY",
+      "is_secret": true
+    },
+    {
+      "key": "CORS_ORIGINS",
+      "value": "[\"https://yourdomain.com\"]"
+    }
+  ],
+  "ports": {
+    "expose": 8000
+  },
+  "health_check": {
+    "path": "/health",
+    "port": 8000,
+    "interval": 30,
+    "timeout": 10,
+    "retries": 3
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "dfworx-web",
+  "type": "application",
+  "build_pack": "nixpacks",
+  "source": {
+    "type": "github",
+    "repository": "your-org/dfworx",
+    "branch": "main",
+    "project_directory": "apps/web"
+  },
+  "environment": [
+    {
+      "key": "NODE_ENV",
+      "value": "production"
+    },
+    {
+      "key": "NEXT_PUBLIC_API_URL",
+      "value": "https://api.yourdomain.com"
+    },
+    {
+      "key": "NEXT_PUBLIC_SUPABASE_URL",
+      "is_secret": false
+    },
+    {
+      "key": "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "is_secret": true
+    }
+  ],
+  "ports": {
+    "expose": 3000
+  },
+  "health_check": {
+    "path": "/",
+    "port": 3000,
+    "interval": 30,
+    "timeout": 10,
+    "retries": 3
+  }
+}
