@@ -67,6 +67,9 @@ lerna-debug.log*
 .env.production
 !.env.example
 
+# Secrets file
+.secrets
+
 # IDE
 .vscode/
 .idea/

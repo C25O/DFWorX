@@ -52,8 +52,7 @@ export default defineSchema({
     .index("by_thread", ["threadId"])
     .index("by_user", ["userId"])
     .index("by_parent", ["parentMessageId"])
-    .index("by_organization", ["organizationId"])
-    .index("by_thread_and_time", ["threadId", "_creationTime"]),
+    .index("by_organization", ["organizationId"]),
 
   // Tags - Categorization for messages and threads
   tags: defineTable({
