@@ -3,13 +3,30 @@
  * Run with: npx tsx test-connections.ts
  */
 
-import { createClient } from './apps/web/lib/supabase/client';
+import { config } from 'dotenv';
+import { resolve } from 'path';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+
+// Load environment variables from multiple sources
+config({ path: resolve(process.cwd(), 'apps/web/.env.local') });
+config({ path: resolve(process.cwd(), 'services/auth-service/.env') });
 
 async function testSupabase() {
   console.log('🧪 Testing Supabase connection...');
 
   try {
-    const supabase = createClient();
+    // Use service role key to bypass RLS for connection testing
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_KEY; // Service role key from auth-service/.env
+
+    if (!supabaseUrl || !serviceKey) {
+      console.log('❌ Supabase credentials not found');
+      return false;
+    }
+
+    const supabase = createSupabaseClient(supabaseUrl, serviceKey, {
+      auth: { persistSession: false }
+    });
 
     // Test connection by querying organizations table
     const { data, error } = await supabase

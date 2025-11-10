@@ -161,3 +161,53 @@ export interface UserFilters {
   limit?: number;
   offset?: number;
 }
+
+// =============================================================================
+// Supabase Database Type
+// =============================================================================
+
+export interface Database {
+  public: {
+    Tables: {
+      organizations: {
+        Row: Organization;
+        Insert: Omit<Organization, "created_at" | "updated_at">;
+        Update: Partial<Omit<Organization, "organization_id" | "created_at" | "updated_at">>;
+      };
+      users: {
+        Row: User;
+        Insert: Omit<User, "created_at" | "updated_at" | "last_login_at">;
+        Update: Partial<Omit<User, "user_id" | "created_at" | "updated_at">>;
+      };
+      notifications: {
+        Row: Notification;
+        Insert: Omit<Notification, "created_at" | "is_read" | "read_at">;
+        Update: Partial<Omit<Notification, "notification_id" | "created_at">>;
+      };
+      audit_logs: {
+        Row: AuditLog;
+        Insert: Omit<AuditLog, "created_at">;
+        Update: never;
+      };
+    };
+  };
+  app_web: {
+    Tables: {
+      profiles: {
+        Row: Profile;
+        Insert: Omit<Profile, "created_at" | "updated_at">;
+        Update: Partial<Omit<Profile, "profile_id" | "user_id" | "created_at" | "updated_at">>;
+      };
+      posts: {
+        Row: Post;
+        Insert: Omit<Post, "created_at" | "updated_at" | "published_at">;
+        Update: Partial<Omit<Post, "post_id" | "user_id" | "organization_id" | "created_at" | "updated_at">>;
+      };
+      comments: {
+        Row: Comment;
+        Insert: Omit<Comment, "created_at" | "updated_at" | "is_edited">;
+        Update: Partial<Omit<Comment, "comment_id" | "post_id" | "user_id" | "created_at" | "updated_at">>;
+      };
+    };
+  };
+}

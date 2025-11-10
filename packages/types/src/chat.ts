@@ -2,7 +2,15 @@
  * Chat-specific types for Convex integration
  */
 
-import type { Id } from "convex/_generated/dataModel";
+// =============================================================================
+// Convex ID Type (local definition to avoid import issues)
+// =============================================================================
+
+/**
+ * Convex ID type - branded string for type safety
+ * This mirrors the Id type from convex/_generated/dataModel
+ */
+export type Id<TableName extends string = string> = string & { __tableName: TableName };
 
 // =============================================================================
 // Base Chat Types (matching Convex schema)
